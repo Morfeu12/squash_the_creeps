@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/EletroMusic.mp3-a1621abe58ed611a45d49c3b5154d295.mp3str"
+
+[deps]
+
+source_file="res://art/EletroMusic.mp3"
+dest_files=[ "res://.import/EletroMusic.mp3-a1621abe58ed611a45d49c3b5154d295.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

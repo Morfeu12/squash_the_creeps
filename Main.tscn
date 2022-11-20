@@ -1,0 +1,134 @@
+[gd_scene load_steps=14 format=2]
+
+[ext_resource path="res://Player.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Main.gd" type="Script" id=2]
+[ext_resource path="res://Mob.tscn" type="PackedScene" id=3]
+[ext_resource path="res://ScoreLabel.gd" type="Script" id=4]
+[ext_resource path="res://fonts/Montserrat-Medium.ttf" type="DynamicFontData" id=5]
+[ext_resource path="res://art/line.png" type="Texture" id=6]
+
+[sub_resource type="BoxShape" id=1]
+extents = Vector3( 30, 1, 30 )
+
+[sub_resource type="CubeMesh" id=2]
+size = Vector3( 60, 2, 60 )
+
+[sub_resource type="CylinderMesh" id=3]
+
+[sub_resource type="SpatialMaterial" id=4]
+albedo_color = Color( 1, 0, 0, 1 )
+
+[sub_resource type="Curve3D" id=5]
+_data = {
+"points": PoolVector3Array( 0, 0, 0, 0, 0, 0, -17.9782, 0, -14.9644, 0, 0, 0, 0, 0, 0, 18.2382, 0, -15.2283, 0, 0, 0, 0, 0, 0, 11.1675, 0, 12.1316, 0, 0, 0, 0, 0, 0, -10.1927, 0, 12.0418, 0, 0, 0, 0, 0, 0, -17.9782, 0, -14.9644 ),
+"tilts": PoolRealArray( 0, 0, 0, 0, 0 )
+}
+
+[sub_resource type="DynamicFont" id=6]
+size = 22
+font_data = ExtResource( 5 )
+
+[sub_resource type="Theme" id=7]
+default_font = SubResource( 6 )
+
+[node name="Main" type="Node"]
+script = ExtResource( 2 )
+mob_scene = ExtResource( 3 )
+
+[node name="Ground" type="StaticBody" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.686436, -0.996627, 1.04607 )
+collision_layer = 4
+collision_mask = 0
+
+[node name="CollisionShape" type="CollisionShape" parent="Ground"]
+shape = SubResource( 1 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Ground"]
+mesh = SubResource( 2 )
+
+[node name="DirectionalLight" type="DirectionalLight" parent="."]
+transform = Transform( -0.00941283, -0.7219, -0.691933, 0.241987, -0.673041, 0.698898, -0.970234, -0.16086, 0.181026, 1.46224, 25.4381, 16.1894 )
+shadow_enabled = true
+
+[node name="Player" parent="." instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 0.998272, -0.0587663, 0, 0.0587663, 0.998272, 0, 6.04921, 0 )
+
+[node name="CameraPivot" type="Position3D" parent="."]
+transform = Transform( 1, 0, 0, 0, 0.555396, 0.831586, 0, -0.831586, 0.555396, 0.0305328, 2.88439, 0.509008 )
+
+[node name="Camera" type="Camera" parent="CameraPivot"]
+transform = Transform( 1, -2.98023e-08, -7.45058e-09, 3.07152e-08, 0.965926, 0.258819, -5.16692e-10, -0.258819, 0.965926, 0.0235648, 4.0041, 13.3715 )
+
+[node name="Cylinders" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -12, 0, -6 )
+visible = false
+
+[node name="MeshInstance" type="MeshInstance" parent="Cylinders"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 3, -10 )
+mesh = SubResource( 3 )
+material/0 = SubResource( 4 )
+
+[node name="MeshInstance2" type="MeshInstance" parent="Cylinders"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.7, 3, 17 )
+mesh = SubResource( 3 )
+material/0 = SubResource( 4 )
+
+[node name="MeshInstance3" type="MeshInstance" parent="Cylinders"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 3, -10.2636 )
+mesh = SubResource( 3 )
+material/0 = SubResource( 4 )
+
+[node name="MeshInstance4" type="MeshInstance" parent="Cylinders"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 23, 3, 17 )
+mesh = SubResource( 3 )
+material/0 = SubResource( 4 )
+
+[node name="SpawnPath" type="Path" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1 )
+curve = SubResource( 5 )
+
+[node name="SpawnLocation" type="PathFollow" parent="SpawnPath"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -17.9782, 0, -14.9644 )
+
+[node name="MobTimer" type="Timer" parent="."]
+wait_time = 0.5
+autostart = true
+
+[node name="UserInterface" type="Control" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme = SubResource( 7 )
+
+[node name="ScoreLabel" type="Label" parent="UserInterface"]
+margin_left = 16.0
+margin_top = 17.0
+margin_right = 423.0
+margin_bottom = 45.0
+custom_colors/font_color = Color( 0.2, 0.184314, 0.215686, 1 )
+text = "Score: 0"
+valign = 1
+script = ExtResource( 4 )
+
+[node name="Retry" type="ColorRect" parent="UserInterface"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0.113725, 0.109804, 0.121569, 0.470588 )
+
+[node name="Label" type="Label" parent="UserInterface/Retry"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -106.0
+margin_top = -14.0
+margin_right = 106.0
+margin_bottom = 14.0
+text = "Press enter to retry"
+
+[node name="Sprite" type="Sprite" parent="UserInterface/Retry"]
+position = Vector2( 363, 319 )
+scale = Vector2( 0.274398, 0.959999 )
+texture = ExtResource( 6 )
+
+[connection signal="hit" from="Player" to="." method="_on_Player_hit"]
+[connection signal="timeout" from="MobTimer" to="." method="_on_MobTimer_timeout"]

@@ -1,0 +1,61 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Mob.gd" type="Script" id=1]
+[ext_resource path="res://art/mob.glb" type="PackedScene" id=2]
+
+[sub_resource type="BoxShape" id=1]
+extents = Vector3( 0.797744, 0.624042, 1.19662 )
+
+[sub_resource type="Animation" id=2]
+resource_name = "float"
+length = 1.2
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Pivot/Character:translation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0.2, 0.7, 1.1 ),
+"transitions": PoolRealArray( 0.466516, 2.07053, 1.86607 ),
+"update": 0,
+"values": [ Vector3( 0.164, 0.24, 0 ), Vector3( 0.082, 0.66, 0 ), Vector3( 0.016, 0.35, 0 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Pivot/Character:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0.1, 0.5, 1.1 ),
+"transitions": PoolRealArray( 0.435275, 2.07053, 1.86607 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 0 ), Vector3( 8, 0, 0 ), Vector3( -9, 0, 0 ) ]
+}
+
+[node name="Mob" type="KinematicBody" groups=["mob"]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.321671, 0 )
+collision_layer = 2
+collision_mask = 0
+script = ExtResource( 1 )
+
+[node name="Pivot" type="Spatial" parent="."]
+
+[node name="Character" parent="Pivot" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 0.99091, 0.134529, 0, -0.134529, 0.99091, 0.0257892, 0.342724, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4.76837e-07, 0.334538, -0.0321672 )
+shape = SubResource( 1 )
+
+[node name="VisibilityNotifier" type="VisibilityNotifier" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0987173, 0.398872, 0.270203 )
+aabb = AABB( -1.19003, -0.713602, -1.67912, 2.38007, 1.27974, 3.35825 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "float"
+anims/float = SubResource( 2 )
+
+[connection signal="screen_exited" from="VisibilityNotifier" to="." method="_on_VisibilityNotifier_screen_exited"]
