@@ -2,6 +2,10 @@ extends Node
 
 export (PackedScene) var mob_scene
 
+#var change_img = false
+#var sound_on = preload("res://art/sound-on.png")
+#var sound_off = preload("res://art/sound-off.png")
+
 func _ready():
 	randomize()
 	$UserInterface/Retry.hide()
@@ -38,3 +42,10 @@ func _on_Player_hit():
 
 func _on_MusicControl_pressed():
 	$"/root/MusicPlayer".stream_paused = !$"/root/MusicPlayer".stream_paused
+	#if change_img:
+		#$UserInterface/MusicControl.set_button_icon(sound_on)
+		#change_img = !change_img
+	#else:
+		#$UserInterface/MusicControl.set_button_icon(sound_off)
+		#change_img = !change_img
+	
