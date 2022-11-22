@@ -93,4 +93,7 @@ autoplay = "float"
 anims/RESET = SubResource( 3 )
 anims/float = SubResource( 4 )
 
+[node name="VisibilityNotifier" type="VisibilityNotifier" parent="."]
+
 [connection signal="body_entered" from="MobDetector" to="." method="_on_MobDetector_body_entered"]
+[connection signal="screen_exited" from="VisibilityNotifier" to="." method="_on_VisibilityNotifier_screen_exited"]

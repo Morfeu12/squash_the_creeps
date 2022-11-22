@@ -75,3 +75,7 @@ func die():
 
 func _on_MobDetector_body_entered(body):
 	die()
+
+
+func _on_VisibilityNotifier_screen_exited():
+	die()
