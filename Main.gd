@@ -34,3 +34,7 @@ func _unhandled_input(event):
 func _on_Player_hit():
 	$MobTimer.stop()
 	$UserInterface/Retry.show()
+
+
+func _on_MusicControl_pressed():
+	$"/root/MusicPlayer".stream_paused = !$"/root/MusicPlayer".stream_paused
